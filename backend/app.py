@@ -1,5 +1,5 @@
 """
-Bumble-inspired Safe Chat Filter Backend
+Safe Chat Filter Backend
 FastAPI application with OpenAI moderation and heuristic fallback
 """
 

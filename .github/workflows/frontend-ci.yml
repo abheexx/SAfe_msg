@@ -1,0 +1,88 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Lint code
+      working-directory: ./frontend
+      run: npm run lint
+    
+    - name: Type check
+      working-directory: ./frontend
+      run: npx tsc --noEmit
+    
+    - name: Test build
+      working-directory: ./frontend
+      run: npm run build
+    
+    - name: Test preview
+      working-directory: ./frontend
+      run: |
+        npm run preview &
+        sleep 10
+        curl -f http://localhost:4173 || exit 1
+        pkill -f "vite preview"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Build for production
+      working-directory: ./frontend
+      run: npm run build
+    
+    - name: Build Docker image
+      working-directory: ./frontend
+      run: |
+        docker build -t safe-chat-frontend .
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm -d -p 3000:80 --name test-frontend safe-chat-frontend
+        sleep 10
+        curl -f http://localhost:3000 || exit 1
+        docker stop test-frontend

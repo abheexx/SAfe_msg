@@ -21,7 +21,7 @@ const StatusCard: React.FC<StatusCardProps> = ({ result, loading, error }) => {
   if (error) {
     return (
       <div className="status-card status-unsafe">
-        ⚠️ Error: {error}
+        Error: {error}
       </div>
     );
   }
@@ -32,7 +32,7 @@ const StatusCard: React.FC<StatusCardProps> = ({ result, loading, error }) => {
 
   return (
     <div className={`status-card ${result.safe ? 'status-safe' : 'status-unsafe'}`}>
-      {result.safe ? '✅ Safe to send!' : '⚠️ Not safe to send'}
+      {result.safe ? 'Safe to send!' : 'Not safe to send'}
       
       {result.reasons.length > 0 && (
         <div className="reasons">

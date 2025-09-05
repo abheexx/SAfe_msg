@@ -77,7 +77,7 @@ const App: React.FC = () => {
           color: 'var(--bumble-black)',
           marginBottom: '10px'
         }}>
-          🐝 Safe Chat Filter
+          Safe Chat Filter
         </h1>
         <p style={{ 
           color: 'var(--bumble-text-light)', 
@@ -100,12 +100,12 @@ const App: React.FC = () => {
             <span style={{ 
               color: apiStatus.openai_available ? 'var(--bumble-success)' : 'var(--bumble-text-light)'
             }}>
-              OpenAI: {apiStatus.openai_available ? '✅ Available' : '❌ Unavailable'}
+              OpenAI: {apiStatus.openai_available ? 'Available' : 'Unavailable'}
             </span>
             <span style={{ 
               color: apiStatus.heuristic_available ? 'var(--bumble-success)' : 'var(--bumble-text-light)'
             }}>
-              Heuristic: {apiStatus.heuristic_available ? '✅ Available' : '❌ Unavailable'}
+              Heuristic: {apiStatus.heuristic_available ? 'Available' : 'Unavailable'}
             </span>
           </div>
         )}
@@ -191,7 +191,7 @@ const App: React.FC = () => {
         fontSize: '0.9rem',
         marginTop: '20px'
       }}>
-        <p>Built with ❤️ using FastAPI, React, and TypeScript</p>
+        <p>Built with FastAPI, React, and TypeScript</p>
         <p style={{ marginTop: '5px' }}>
           {apiStatus?.openai_available 
             ? 'Powered by OpenAI Moderation API' 

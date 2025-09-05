@@ -1,17 +1,30 @@
-# 🐝 Bumble-Inspired Safe Chat Filter
+# Safe Chat Filter
 
-A full-stack AI-powered chat moderation demo inspired by Bumble's safety features. This application helps users check if their chat messages are safe to send before hitting send.
+A full-stack AI-powered chat moderation application inspired by Bumble's safety features. This application helps users check if their chat messages are safe to send before hitting send.
 
-## ✨ Features
+## Features
 
 - **AI-Powered Moderation**: Uses OpenAI's moderation API when available
 - **Heuristic Fallback**: Smart pattern matching when OpenAI is unavailable
 - **Real-time Checking**: Auto-checks messages as you type (500ms debounce)
-- **Bumble-Style UI**: Beautiful yellow/black design with rounded cards
+- **Bumble-Style UI**: Clean yellow/black design with rounded cards
 - **Mobile Responsive**: Works perfectly on all devices
 - **Production Ready**: Deployable to Render/Heroku and Vercel/Netlify
 
-## 🏗️ Architecture
+## Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend       │    │   External      │
+│   (React)       │    │   (FastAPI)     │    │   Services      │
+├─────────────────┤    ├─────────────────┤    ├─────────────────┤
+│ • TypeScript    │    │ • Python 3.11   │    │ • OpenAI API    │
+│ • Vite Build    │    │ • FastAPI       │    │ • Moderation    │
+│ • Real-time UI  │◄──►│ • CORS Enabled  │◄──►│ • Endpoint      │
+│ • Debounced     │    │ • Health Check  │    │                 │
+│ • Mobile First  │    │ • Heuristic     │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
 ### Backend (FastAPI)
 - **Endpoint**: `POST /api/check`
@@ -27,7 +40,7 @@ A full-stack AI-powered chat moderation demo inspired by Bumble's safety feature
 - **API Integration**: Axios with error handling
 - **Debouncing**: 500ms auto-check as you type
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.11+
@@ -84,29 +97,7 @@ A full-stack AI-powered chat moderation demo inspired by Bumble's safety feature
 
    The app will be available at `http://localhost:3000`
 
-## 📱 Screenshots
-
-### Desktop View
-![Desktop View](screenshots/desktop.png)
-*Clean, modern interface with Bumble's signature yellow and black color scheme*
-
-### Mobile View
-![Mobile View](screenshots/mobile.png)
-*Fully responsive design that works perfectly on mobile devices*
-
-### Safe Message Result
-![Safe Message](screenshots/safe-message.png)
-*Green checkmark indicates the message is safe to send*
-
-### Unsafe Message Result
-![Unsafe Message](screenshots/unsafe-message.png)
-*Warning with specific reasons why the message isn't safe*
-
-### Loading State
-![Loading State](screenshots/loading.png)
-*Smooth loading animation while checking messages*
-
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -132,7 +123,7 @@ VITE_API_URL=http://localhost:8000
    - Categories: violence, harassment, inappropriate, spam
    - Works without external API calls
 
-## 🚀 Deployment
+## Deployment
 
 ### Backend Deployment (Render/Heroku)
 
@@ -151,7 +142,7 @@ VITE_API_URL=http://localhost:8000
 4. **Add environment variables**:
    - `VITE_API_URL` (your backend URL)
 
-## 🛠️ Development
+## Development
 
 ### Project Structure
 ```
@@ -207,7 +198,7 @@ npm run preview
 npm run lint
 ```
 
-## 🔍 API Reference
+## API Reference
 
 ### POST /api/check
 Check if a text message is safe to send.
@@ -245,7 +236,7 @@ Check API health and available services.
 }
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Test the API directly
 ```bash
@@ -266,7 +257,7 @@ curl -X POST "http://localhost:8000/api/check" \
 3. Try both safe and unsafe content
 4. Test on different screen sizes
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -274,17 +265,9 @@ curl -X POST "http://localhost:8000/api/check" \
 4. Test thoroughly
 5. Submit a pull request
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Inspired by Bumble's commitment to safe online dating
 - Built with FastAPI, React, and TypeScript
 - Uses OpenAI's moderation API for AI-powered detection
 - Designed with accessibility and mobile-first principles
-
----
-
-**Built with ❤️ for safer online conversations**
